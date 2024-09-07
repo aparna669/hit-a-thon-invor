@@ -1,2 +1,45 @@
-# Auto detect text files and perform LF normalization
+# Auto detect text files and perform LF normalizationimport React, { useState, useEffect } from "react";
+import axios from "axios";
+
+const OrderManagement = () => {
+  const [orders, setOrders] = useState([]);
+
+  // Fetch order data from backend
+  useEffect(() => {
+    axios.get("/api/orders")
+      .then(response => {
+        setOrders(response.data);
+      })
+      .catch(error => console.log(error));
+  }, []);
+
+  return (
+    <div>
+      <h1>Order Management</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Status</th>
+            <th>Order Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((order) => (
+            <tr key={order._id}>
+              <td>{order._id}</td>
+              <td>{order.customer_name}</td>
+              <td>{order.status}</td>
+              <td>{order.order_date}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default OrderManagement;
+
 * text=auto
